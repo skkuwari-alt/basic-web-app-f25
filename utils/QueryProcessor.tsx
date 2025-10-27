@@ -16,7 +16,7 @@ export default function QueryProcessor(query: string): string {
     return "skkuwari";
   }
    // 3. Largest-number question
-  if (lower.includes("which of the following numbers is the largest")) {
+  if (lower.includes("which of the following numbers is")) {
     // Find all numbers in the query
     const nums = query.match(/\d+/g);
     if (nums && nums.length > 0) {
@@ -25,6 +25,14 @@ export default function QueryProcessor(query: string): string {
       return max.toString();
     }
   }
+  // handle addition like "What is 77 plus 51?"
+const additionMatch = query.match(/what is (\d+)\s+plus\s+(\d+)/i);
+if (additionMatch) {
+  const a = parseInt(additionMatch[1]);
+  const b = parseInt(additionMatch[2]);
+  return (a + b).toString();
+}
+
 
   return "";
 }
