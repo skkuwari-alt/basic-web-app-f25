@@ -48,6 +48,11 @@ if (bothMatch) {
     }
   }
 }
-
+const mulMatch = query.match(/what is (\d+)\s+multiplied\s+(\d+)/i);
+if (mulMatch) {
+  const a = parseInt(mulMatch[1]);
+  const b = parseInt(mulMatch[2]);
+  return (a * b).toString();
+}
   return "";
 }
