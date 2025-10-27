@@ -33,6 +33,21 @@ if (additionMatch) {
   return (a + b).toString();
 }
 
+// Handle "which of the following numbers is both a square and a cube"
+const bothMatch = query.match(/which of the following numbers.*?([\d,\s]+)/i);
+if (bothMatch) {
+  const numbers = bothMatch[1]
+    .split(',')
+    .map(n => parseInt(n.trim()))
+    .filter(n => !isNaN(n));
+
+  for (const num of numbers) {
+    const root6 = Math.pow(num, 1 / 6);
+    if (Math.abs(root6 - Math.round(root6)) < 1e-9) {
+      return num.toString();
+    }
+  }
+}
 
   return "";
 }
