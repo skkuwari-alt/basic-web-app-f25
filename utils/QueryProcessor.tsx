@@ -25,13 +25,19 @@ export default function QueryProcessor(query: string): string {
       return max.toString();
     }
   }
-  // handle addition like "What is 77 plus 51?"
-const additionMatch = query.match(/what is (\d+)\s+plus\s+(\d+)/i);
-if (additionMatch) {
-  const a = parseInt(additionMatch[1]);
-  const b = parseInt(additionMatch[2]);
-  return (a + b).toString();
+// Handle basic math queries: addition, subtraction, multiplication
+const mathMatch = query.match(/what is (\d+)\s+(plus|minus|multiplied by)\s+(\d+)/i);
+if (mathMatch) {
+  const a = parseInt(mathMatch[1]);
+  const op = mathMatch[2];
+  const b = parseInt(mathMatch[3]);
+
+  if (op.includes("plus")) return (a + b).toString();
+  if (op.includes("minus")) return (a - b).toString();
+  if (op.includes("multiplied")) return (a * b).toString();
 }
+
+
 
 // Handle "which of the following numbers is both a square and a cube"
 const bothMatch = query.match(/which of the following numbers.*?([\d,\s]+)/i);
@@ -53,12 +59,7 @@ if (bothMatch) {
   }
 }
 
-const minusMatch = query.match(/what is (\d+)\s+minus\s+(\d+)/i);
-if (minusMatch) {
-  const a = parseInt(minusMatch[1]);
-  const b = parseInt(minusMatch[2]);
-  return (a - b).toString();
-}
+
 
   return "";
 }
