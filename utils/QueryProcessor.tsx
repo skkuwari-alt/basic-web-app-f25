@@ -41,18 +41,24 @@ if (bothMatch) {
     .map(n => parseInt(n.trim()))
     .filter(n => !isNaN(n));
 
-  for (const num of numbers) {
+  // Find all numbers that are perfect sixth powers
+  const sixthPowers = numbers.filter(num => {
     const root6 = Math.pow(num, 1 / 6);
-    if (Math.abs(root6 - Math.round(root6)) < 1e-9) {
-      return num.toString();
-    }
+    return Math.abs(root6 - Math.round(root6)) < 1e-9;
+  });
+
+  // Return the largest one if any exist
+  if (sixthPowers.length > 0) {
+    return Math.max(...sixthPowers).toString();
   }
 }
-const mulMatch = query.match(/what is (\d+)\s+multiplied\s+(\d+)/i);
-if (mulMatch) {
-  const a = parseInt(mulMatch[1]);
-  const b = parseInt(mulMatch[2]);
-  return (a * b).toString();
+
+const minusMatch = query.match(/what is (\d+)\s+minus\s+(\d+)/i);
+if (minusMatch) {
+  const a = parseInt(minusMatch[1]);
+  const b = parseInt(minusMatch[2]);
+  return (a - b).toString();
 }
+
   return "";
 }
